@@ -19,17 +19,21 @@ namespace PokemonReviewApp.Controllers
             _mapper = mapper;
         }
 
+
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Pokemon>))]
         public IActionResult GetPokemons()
         {
             var pokemons = _mapper.Map<List<PokemonDto>>(_pokemonRepository.GetPokemons());
+
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
+
             return Ok(pokemons);
         }
+
 
         [HttpGet("{pokeId}")]
         [ProducesResponseType(200, Type = typeof(Pokemon))]
@@ -40,11 +44,14 @@ namespace PokemonReviewApp.Controllers
             {
                 return NotFound();
             }
+
             var pokemon = _mapper.Map<PokemonDto>(_pokemonRepository.GetPokemon(pokeId));
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
             return Ok(pokemon);
         }
 
@@ -57,11 +64,14 @@ namespace PokemonReviewApp.Controllers
             {
                 return NotFound();
             }
+
             var rating = _pokemonRepository.GetPokimonRaiting(pokeId);
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
             return Ok(rating);
         }
 
